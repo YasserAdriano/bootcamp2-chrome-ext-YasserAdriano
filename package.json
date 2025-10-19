@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@playwright/test": "1.46.0",
+    "@types/node": "^24.8.1",
     "archiver": "7.0.1"
   }
 }
