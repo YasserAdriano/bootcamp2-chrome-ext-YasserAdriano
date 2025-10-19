@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install deps
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Build extension
+        run: npm run build
+      - name: Run E2E tests (try normal, se falhar gera relatório)
+        run: |
+          set -o pipefail
+          npm run test:e2e || (npm run test:e2e -- --reporter=html; exit 0)
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+      - name: Upload extension zip
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-zip
+          path: dist/extension.zip

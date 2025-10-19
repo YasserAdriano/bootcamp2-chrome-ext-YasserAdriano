@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  e2e:
+    build: .
+    image: ext-e2e:latest
+    environment:
+      - CI=true
+    volumes:
+      - ./:/app:rw
+    working_dir: /app
+    command: npm run test:e2e
+    shm_size: 2gb

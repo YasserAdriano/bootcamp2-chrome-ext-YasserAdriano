@@ -1,0 +1,16 @@
+body {
+  width: 200px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 10px;
+}
+button {
+  background-color: #0078d7;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover { background-color: #005fa3; }
+#status { margin-top: 10px; font-size: 12px; color: #333; }
